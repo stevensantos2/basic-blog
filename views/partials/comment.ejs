@@ -1,0 +1,39 @@
+
+
+<!-- The Modal -->
+<div class="modal fade" id="commentModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="/music/comments" method="post" id="commentForm">
+                    <div class="input-group mb-3" id="cInputGroup">
+                        <input type="text" class="form-control" placeholder="Type Your Message" name="content"
+                            aria-label="content" id="comment">
+                        <input type="hidden" name="postID" id="postID">
+                        <input type="hidden" name="topicID" id="topicID">
+                        <input type="hidden" name="commentID" id="commentID">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="submitBtn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

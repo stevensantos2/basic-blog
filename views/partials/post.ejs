@@ -1,0 +1,48 @@
+<button type="button" class="btn btn-dark mb-3 " data-bs-toggle="modal" data-bs-target="#postModal">
+    Add Your Opinion
+  </button>
+  
+  <!-- The Modal -->
+  <div class="modal fade" id="postModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form action="/music" method="post" id="postForm">
+                <div class="btn-group mb-2" role="group" id="topicGroup" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="topic" id="albumBtn" value="albums" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="albumBtn">Albums</label>
+            
+                    <input type="radio" class="btn-check" name="topic" value="artists" id="artistBtn" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="artistBtn">Artist</label>
+            
+                    <input type="radio" class="btn-check" name="topic" id="songBtn" value="songs" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="songBtn">Song</label>
+                </div>
+                <div class="input-group mb-3" id="pInputGroup">
+                    <input type="text" class="form-control" placeholder="Enter Title" name="title" aria-label="title">
+                    <input type="text" class="form-control" placeholder="Type Your Message" name="content" aria-label="content">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" id="submitBtn"
+                            onclick="handleClick('done')">Submit</button>
+                    </div>
+                </div>
+            </form>
+                
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+
+
+  <main class="container centered mt-5">
+    <i class="fas fa-music fa-6x"></i>
+    <h2 class="mt-5">Hello <%=user.username%></h2>
+    <%- include('partials/topics') %>
+      <%- include('partials/content') %>
+
+        <div class="col-12 mt-5">
+          <a class=" btn btn-dark btn-lg" href="/logout" role="button">Logout</a>
+        </div>
+
+  </main>
+
+
+  <%- include('partials/footer') %>

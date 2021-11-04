@@ -1,0 +1,127 @@
+<script>
+    function handleCardClick(target) {
+        console.log("Card Clicked", target);
+        const id = "#" + target;
+        console.log(id);
+        $(id).toggleClass('hide');
+    }
+    function handleCommentClick(targetPost, topic, targetComment) {
+        console.log("Comment Clicked", targetPost, topic, targetComment);
+        //console.log("This Element: ", element);
+        $("#postID").val(targetPost);
+        $("#topicID").val(topic);
+        if(targetComment){
+            $("#commentID").val(targetComment);
+        }
+
+    }
+    function handleEditClick(target, comment) {
+        const id = "#" + target;
+        console.log(id);
+        $(id).toggleClass("hide");
+        
+    }
+    /* TODO
+post reply to comments route
+if author delete comment/reply
+*/
+</script>
+
+<div class="justify-content-center mt-3">
+    <%- include('post') %>
+        <%allPosts.forEach((p, index)=>{ console.log(p);%>
+            <%p.posts.forEach((x,index)=>{%>
+                    <div class="col-md-8 card text-white bg-dark mb-3">
+                        <div class="card-body">
+                            <h2 class="card-title"><%=x.title%></h2>
+                            
+                            <p class="card-text fs-3">
+                                <%=x.content%>
+                                    <form action="/update/<%=p.section%>/<%=x.id%>" method="post" id="<%=x.id%><%=index%>" class="hide">
+                                        <input type="text" name="updatedComment" id="updatedComment" value="<%=x.content%>">
+                                        <button type="submit" class="btn btn-outline-light">Submit</button>
+                                    </form>
+                                    
+                            </p>
+                            <p><%=x.stamp.date%>, <%=x.stamp.time%> by <%=x.author.username%></p>
+                            <p class="card-text">
+                                <%=x.comments.length%> Comments
+                            </p>
+                            <p class="fs-6">Post Reference: <%=x.id%></p>
+                            <div class="row">
+                                <a type="button" class="col hover-dark d-inline" onclick="handleCardClick('<%=x.id%>')">
+                                    <i type="button" class="fas fa-comments fa-2x   "></i></a>
+
+                                <%if(user.googleId === x.author.googleId){%>
+                                    <a type="button" class="col" href="/delete/<%=p.section%>/<%=x.id%>"><i class=" fas fa-solid hover-dark fa-2x fa-trash"></i></a>
+                                
+                                    <a type="button" class="col hover-dark  d-inline"
+                                    onclick="handleEditClick('<%=x.id%><%=index%>', '<%=x.content%>')"><i class="fas fa-2x fa-pen"></i></a>
+                                <%}%>
+                                    
+                                    <a type="button" class="col fas fa-reply fa-2x hover-dark d-inline"
+                                    data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-toggle="modal"
+                                    data-bs-target="#commentModal"
+                                    onclick="handleCommentClick('<%=x.id%>','<%=p.section%>', false)"></a> 
+                            </div>
+                        </div>
+                
+                </div>
+                    <!--Sort comments by time & date-->
+                    <div class="card col-md-8 hide mb-3" id="<%=x.id%>">
+                        <ul class="listgroup list-group-flush">
+                            <%if(x.comments.length===0){%>
+                                <li class="list-group-item text-dark">
+                                    <h3>This Message Has No Replies</h3>
+                                </li>
+                                <%}else{%>
+                                    <%x.comments.forEach((c,i)=>{%>
+                                        <li class="list-group-item text-dark" id="<%=c.id%>">
+                                            <div>
+                                                <p class="fs-5">   
+                                                        <%=c.content%>
+                                                        <form action="/update/<%=p.section%>/<%=x.id%>/<%=c.id%>" method="post"
+                                                            id="<%=c.id%><%=i%>" class="hide">
+                                                            <input type="text" name="updatedComment" id="updatedComment"
+                                                                value="<%=c.content%>">
+                                                            <button type="submit" class="btn btn-outline-light">Submit</button>
+                                                        </form>
+                                                </p>
+                                                <p><%=c.stamp.date%>, <%=c.stamp.time%> by <%=c.author.username%></p>
+                                                <p class="fs-6">response to <%=c.target%></p>
+                                                <p class="fs-6">Comment Reference: <%=c.id%></p>
+
+
+                                            </div>    
+                                                <div class="row">
+                                                    <%if(user.googleId === x.author.googleId){%>
+                                                    <a type="button" class="col d-inline" href="/delete/<%=p.section%>/<%=x.id%>/<%=c.id%>">
+                                                        <i class="fas fa-2x fa-trash "></i>
+                                                    </a>
+
+                                                    <a type="button" class="col d-inline"
+                                                        onclick="handleEditClick('<%=c.id%><%=i%>', '<%=c.content%>')">
+                                                        <i class="fas fa-2x fa-pen"></i>
+                                                    </a>
+                                                    <%}%>
+                                                    <a type="button" class="col d-inline" data-bs-toggle="modal"
+                                                        data-bs-target="#commentModal" data-bs-toggle="modal" data-bs-target="#commentModal"
+                                                        onclick="handleCommentClick('<%=x.id%>','<%=p.section%>','<%=c.id%>')">
+                                                        <i class="fas fa-reply fa-2x"></i>
+                                                    </a>
+                                                
+                                                
+                                                </div>
+                                            
+                                            
+                                        </li>
+                                    <%})}%>
+                        </ul>
+                    </div>
+
+                </div>
+                <%})%>
+                    <%})%>
+</div>
+
+<%- include('comment') %>
